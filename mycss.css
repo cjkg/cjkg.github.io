@@ -26,8 +26,8 @@ a:hover {
   background-color: #F0F0F0;
 }
 
-.navbar-brand {
-	color: #FFFFFF;
+.navbar-inverse .navbar-brand {
+color: #FFFFFF;
 }
 
 .navbar-default {
