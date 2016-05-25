@@ -27,9 +27,9 @@ a {
     border-color: #000000;
 }
 .navbar-default .navbar-nav > li > a {
-    color: #FEFDFA;
+    color: #CCCCCC;
 }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
     background-color: #D00000;
-    color: #CCCCCC;
+    color: #FEFDFA;
 }
