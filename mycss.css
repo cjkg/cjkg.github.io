@@ -26,6 +26,10 @@ a:hover {
   background-color: #F0F0F0;
 }
 
+.navbar-brand {
+	color: #FFFFFF;
+}
+
 .navbar-default {
     background-color: #657F08;
     border-color: #000000;
