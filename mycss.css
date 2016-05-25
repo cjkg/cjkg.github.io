@@ -31,5 +31,5 @@ a {
 }
 .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
     background-color: #D00000;
-    color: #FFFFFF;
+    color: #EEEEEE;
 }
