@@ -1,0 +1,28 @@
+=IF(ISNA(MATCH(A2,'raw data'!A:A,0)), "SSN not in raw data. Research.", IF(B2<>SUMIF('raw data'!A:A,A2,'raw data'!B:B), CONCATENATE("Should total $",SUMIF('raw data'!A:A,A2,'raw data'!B:B),". Research."),"good"))
+=IFERROR(IF(C3<>INDEX(groups!A:C, MATCH(1,(groups!A:A=A3)*(groups!B:B=B3),0),3),CONCATENATE("Was ", INDEX(groups!A:C, MATCH(1,(groups!A:A=A3)*(groups!B:B=B3),0),3), " DPD. Research"), "good"), "SSN/group not found. Research.")
+
+Sub DPD_Fill()
+    Dim GroupCount As Long
+        
+    GroupCount = Worksheets("dpd qc").Range("A" & Rows.Count).End(xlUp).Row
+        
+    Application.ScreenUpdating = False
+        With Worksheets("dpd qc")
+            .Range("D2:D" & GroupCount).FillDown
+            .Cells.AutoFilter Field:=4, Criteria1:="<>good"
+            .Range("D" & GroupCount + 1).FormulaArray = "=IF(AND(D2:D" & GroupCount & "=""good""),""No errors found!"","""")"
+        End With
+    Application.ScreenUpdating = True
+   
+End Sub
+Sub PMT_QC()
+    Dim SSNCount As Long
+    SSNCount = Worksheets("pmt qc").Range("A" & Rows.Count).End(xlUp).Row
+     Application.ScreenUpdating = False
+        With Worksheets("pmt qc")
+            .Range("C2:C" & SSNCount).FillDown
+            .Cells.AutoFilter Field:=3, Criteria1:="<>good"
+            .Range("C" & SSNCount + 1).FormulaArray = "=IF(AND(C2:C" & SSNCount & "=""good""),""No errors found!"","""")"
+        End With
+    Application.ScreenUpdating = True
+End Sub
