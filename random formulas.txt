@@ -7,3 +7,14 @@ Sub declutter()
             End If
         Next i
 End Sub
+Sub FindMatchingValue()
+    Dim i as Integer, intValueToFind as integer
+    intValueToFind = 12345
+    For i = 1 to 500
+        If Cells(i,1).Value = intValueToFind then 
+            MsgBox("Found value on row " & i)
+            Exit Sub
+        End If
+    Next i
+    MsgBox("Value not found in the range!")  
+End Sub
