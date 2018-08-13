@@ -1,0 +1,59 @@
+
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned -Force
+
+$templateFile="C:\Users\cjgib\Desktop\test.xlsx"
+$DailyFile="C:\Users\cjgib\Desktop\test$(get-date -f -MM-dd-yyyy-HH-mm-ss).xlsx"
+$SecurePassword = Read-Host -Prompt "Enter LAN password" -AsSecureString
+
+$BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecurePassword)
+$PlainPassword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
+$PlainPassword
+
+$excelApp = New-Object -ComObject "Excel.Application"
+$excelApp.Visible = $true
+$excelAppDoc = $excelApp.Workbooks.Open($templateFile)
+$excelAppDoc.SaveAs($DailyFile)
+
+#######
+
+Add-Type -Assembly 'System.Windows.Forms'
+Add-Type -Assembly 'System.Drawing'
+
+$passwordForm = New-Object Windows.Forms.Form
+$passwordForm.Text = 'Netezza Password'
+$passwordForm.StartPosition = 'CenterScreen'
+$passwordForm.Size = New-Object System.Drawing.Size(300,200)
+$password = New-Object Windows.Forms.MaskedTextBox
+
+$OKButton = New-Object System.Windows.Forms.Button
+$OKButton.Location = New-Object System.Drawing.Point(75,120)
+$OKButton.Size = New-Object System.Drawing.Size(75,23)
+$OKButton.Text = 'OK'
+$OKButton.DialogResult = [System.Windows.Forms.DialogResult]::OK
+$passwordForm.AcceptButton = $OKButton
+$passwordForm.Controls.Add($OKButton)
+
+$CancelButton = New-Object System.Windows.Forms.Button
+$CancelButton.Location = New-Object System.Drawing.Point(150,120)
+$CancelButton.Size = New-Object System.Drawing.Size(75,23)
+$CancelButton.Text = 'Cancel'
+$CancelButton.DialogResult = [System.Windows.Forms.DialogResult]::Cancel
+$passwordForm.CancelButton = $CancelButton
+$passwordForm.Controls.Add($CancelButton)
+
+$label = New-Object System.Windows.Forms.Label
+$label.Location = New-Object System.Drawing.Point(10,20)
+$label.Size = New-Object System.Drawing.Size(280,20)
+$label.Text = 'Enter Netezza/Lan Password:'
+$passwordForm.Controls.Add($label)
+
+$password = New-Object Windows.Forms.MaskedTextBox
+$password.PasswordChar = '*'
+$password.Top  = 100
+$password.Left = 80
+
+$passwordForm.Controls.Add($password)
+
+$passwordForm.Topmost = $true
+
+$result = $passwordForm.ShowDialog()
