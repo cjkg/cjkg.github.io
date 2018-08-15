@@ -1,0 +1,25 @@
+do{
+$runPrompt= Read-Host "Run now (Y/N)?"
+}
+while("Y", "N" -notcontains $runPrompt)
+
+switch ( $runPrompt )
+ {
+		Y{$wait = 0}
+        N{$wait = 1}
+    }
+$wait
+
+$ErrorActionPreference= 'silentlycontinue'
+$templateLocation = "<<path>> "    # Path to read files
+Write-Host "Loading Files..."
+$files = Get-ChildItem <<path>>
+Write-Host "Files Loaded."
+ForEach ($file in $files)
+{
+     $Excel = New-Object -ComObject Excel.Application
+     $Excel.visible = $true
+     $Excel.DisplayAlerts = $false
+     $WorkBook = $Excel.Workbooks.Open($file.Fullname)
+	$Excel.Run("test", "password")  | Out-Null
+}
