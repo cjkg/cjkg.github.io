@@ -23,3 +23,20 @@ ForEach ($file in $files)
      $WorkBook = $Excel.Workbooks.Open($file.Fullname)
 	$Excel.Run("test", "password")  | Out-Null
 }
+
+
+$seconds =  120
+
+$myshell = New-Object -com "Wscript.Shell"
+$notepad = Start-Process 'C:\windows\system32\notepad.exe'
+
+for ($i = 1; $i -lt $seconds; $i++) 
+{
+  Start-Sleep -Seconds 1
+  If (($i % 5) -eq 0) 
+  {
+      $line = Get-Content  C:\users\cjgib\desktop\shakespeare.txt | Select -Index ($i / 5)
+      $myshell.sendkeys($line)
+      $myshell.sendkeys('~')
+  }
+}
